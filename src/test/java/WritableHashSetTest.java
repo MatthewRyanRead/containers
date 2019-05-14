@@ -7,7 +7,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends ReadableHashSetTest<T> {
+public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends ReadableHashSetTest<T> implements WritableContainerTest {
     @Override
     protected T makeContainer() {
         //noinspection unchecked
@@ -80,5 +80,23 @@ public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends Rea
 
         assertEquals(set2, set1);
         assertEquals(set1.hashCode(), set2.hashCode());
+    }
+
+    @Test
+    @Override
+    public void testClear() {
+        final T set1 = this.makeContainer(1, 2, 3);
+
+        set1.clear();
+
+        assertTrue(set1.isEmpty());
+        assertFalse(set1.contains(1));
+        assertFalse(set1.contains(2));
+        assertFalse(set1.contains(3));
+
+        final T set2 = this.makeContainer();
+
+        assertEquals(set2, set1);
+        assertEquals(set2.hashCode(), set1.hashCode());
     }
 }

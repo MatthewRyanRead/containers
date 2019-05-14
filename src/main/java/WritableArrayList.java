@@ -96,6 +96,7 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
     @Override
     public void clear() {
         this.array = new Object[this.array.length];
+        this.currMaxIndex = -1;
     }
 
     @Override

@@ -146,6 +146,8 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
         for (int i = 0; i < this.hashtable.length; i++) {
             this.hashtable[i] = null;
         }
+        this.size = 0;
+        this.cachedHashCode = null;
     }
 
     protected class WritableHashSetIterator<T extends WritableHashSet<E>> extends ReadableHashSetIterator<T> implements WritableIterator<E> {
