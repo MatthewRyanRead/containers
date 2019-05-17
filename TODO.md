@@ -6,5 +6,4 @@
     - etc.
 - Update iterators to deal with concurrent modifications (?)
 - Make concurrency-safe implementations
-- Helper method for `WritableHashSet` to alter size and the cached hashcode at
-  the same time
+- Helper method for `WritableHashSet` to alter size and the cached hashcode at the same time

@@ -140,7 +140,8 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
         return true;
     }
 
-    protected class WritableArrayListIterator<T extends WritableArrayList<E>> extends ReadableArrayListIterator<T> implements WritableIterator<E> {
+    protected class WritableArrayListIterator<T extends WritableArrayList<E>> extends ReadableArrayListIterator<T>
+                                                                              implements WritableIterator<E> {
         protected WritableArrayListIterator(final T list) {
             super(list);
         }

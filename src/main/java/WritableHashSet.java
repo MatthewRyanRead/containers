@@ -150,7 +150,8 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
         this.cachedHashCode = null;
     }
 
-    protected class WritableHashSetIterator<T extends WritableHashSet<E>> extends ReadableHashSetIterator<T> implements WritableIterator<E> {
+    protected class WritableHashSetIterator<T extends WritableHashSet<E>> extends ReadableHashSetIterator<T>
+                                                                          implements WritableIterator<E> {
         protected boolean canRemove = false;
 
         protected WritableHashSetIterator(final T set) {
