@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
  *
  * @param <E> The type of elements contained
  */
-@SuppressWarnings({"UnusedReturnValue", "unused"})
 public interface WritableList<E> extends ReadableList<E>, WritableContainer<E> {
     /**
      * Remove the element at the specified index.

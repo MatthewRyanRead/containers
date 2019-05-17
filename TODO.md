@@ -3,8 +3,10 @@
 - MORE TESTS
     - Index tests for lists (especially `removeAt()`)
     - Other untested methods
+    - Null element handling
     - etc.
 - Update iterators to deal with concurrent modifications (?)
 - Make concurrency-safe implementations
 - Helper method for `WritableHashSet` to alter size and the cached hashcode at the same time
 - Create a `Node` class in `ReadableHashSet` and use a linked list of `Node<E>` for each entry in the array
+- Add more JavaDoc to methods

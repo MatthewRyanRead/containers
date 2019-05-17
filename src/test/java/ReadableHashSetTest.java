@@ -24,6 +24,12 @@ public class ReadableHashSetTest<T extends ReadableHashSet<Integer>> extends Int
         return (T) new ReadableHashSet<>(elems);
     }
 
+    @Override
+    protected T makeContainer(final Container<Integer> other) {
+        //noinspection unchecked
+        return (T) new ReadableHashSet<>(other);
+    }
+
     @Test
     public void testCompare() {
         final T set1 = this.makeContainer(1, 2, 3);

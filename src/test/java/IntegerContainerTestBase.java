@@ -12,6 +12,7 @@ public abstract class IntegerContainerTestBase<T extends Container<Integer>> {
     protected abstract T makeContainer();
     protected abstract T makeContainer(@Nullable final Integer elem);
     protected abstract T makeContainer(final Integer... elems);
+    protected abstract T makeContainer(final Container<Integer> other);
 
     @Test
     public void testEmpty() {
@@ -58,5 +59,14 @@ public abstract class IntegerContainerTestBase<T extends Container<Integer>> {
         }
 
         fail("Should never get here");
+    }
+
+    @Test
+    public void testCopyConstructor() {
+        final T container1 = this.makeContainer(1, 2, 3);
+        final T container2 = this.makeContainer(container1);
+
+        assertEquals(container1, container2);
+        assertEquals(container1.hashCode(), container2.hashCode());
     }
 }

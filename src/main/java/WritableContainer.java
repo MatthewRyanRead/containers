@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
  *
  * @param <E> The type of elements contained
  */
-@SuppressWarnings({"UnusedReturnValue", "unused"})
 public interface WritableContainer<E> extends Writeratable<E, WritableIterator<E>>, Container<E> {
     /**
      * Request to add an element to this container. When the call returns, the container holds the element.

@@ -43,7 +43,7 @@ public class ReadableArrayList<E> implements ReadableList<E> {
             throw new IllegalArgumentException();
         }
 
-        // noinspection unchecked
+        //noinspection unchecked
         return (E) array[index];
     }
 
@@ -87,7 +87,7 @@ public class ReadableArrayList<E> implements ReadableList<E> {
         final Object[] copy = new Object[this.size()];
         System.arraycopy(this.array, 0, copy, 0, this.size());
 
-        // noinspection unchecked
+        //noinspection unchecked
         return (E[]) copy;
     }
 

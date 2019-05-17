@@ -26,6 +26,12 @@ public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends Rea
         return (T) new WritableHashSet<>(elems);
     }
 
+    @Override
+    protected T makeContainer(final Container<Integer> other) {
+        //noinspection unchecked
+        return (T) new WritableHashSet<>(other);
+    }
+
     @Test
     public void testAdd() {
         final T set1 = this.makeContainer();
@@ -95,6 +101,23 @@ public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends Rea
         assertFalse(set1.contains(3));
 
         final T set2 = this.makeContainer();
+
+        assertEquals(set2, set1);
+        assertEquals(set2.hashCode(), set1.hashCode());
+    }
+
+    @Test
+    @Override
+    public void testRemove() {
+        final T set1 = this.makeContainer(1, 2, 3);
+
+        assertTrue(set1.remove(2));
+
+        assertEquals(2, set1.size());
+        assertFalse(set1.contains(2));
+        assertFalse(set1.remove(2));
+
+        final T set2 = this.makeContainer(1, 3);
 
         assertEquals(set2, set1);
         assertEquals(set2.hashCode(), set1.hashCode());

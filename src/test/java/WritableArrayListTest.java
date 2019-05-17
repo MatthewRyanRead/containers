@@ -26,6 +26,12 @@ public class WritableArrayListTest<T extends WritableArrayList<Integer>> extends
         return (T) new WritableArrayList<>(elems);
     }
 
+    @Override
+    protected T makeContainer(final Container<Integer> other) {
+        //noinspection unchecked
+        return (T) new WritableArrayList<>(other);
+    }
+
     @Test
     @Override
     public void testAdd() {
@@ -98,6 +104,53 @@ public class WritableArrayListTest<T extends WritableArrayList<Integer>> extends
         assertFalse(list1.contains(3));
 
         final T list2 = this.makeContainer();
+
+        assertEquals(list2, list1);
+        assertEquals(list2.hashCode(), list1.hashCode());
+    }
+
+    @Test
+    public void testSet() {
+        final T list1 = this.makeContainer(1, 2, 3);
+
+        list1.set(0, 4);
+        list1.set(1, 5);
+        list1.set(2, 6);
+
+        final T list2 = this.makeContainer(4, 5, 6);
+
+        assertEquals(list2, list1);
+        assertEquals(list2.hashCode(), list1.hashCode());
+    }
+
+    @Test
+    public void testRemoveAt() {
+        final T list1 = this.makeContainer(1, 2, 3);
+
+        final Integer removed = list1.removeAt(1);
+
+        assertEquals(Integer.valueOf(2), removed);
+        assertEquals(2, list1.size());
+        assertFalse(list1.contains(2));
+
+        final T list2 = this.makeContainer(1, 3);
+
+        assertEquals(list2, list1);
+        assertEquals(list2.hashCode(), list1.hashCode());
+    }
+
+    @Test
+    @Override
+    public void testRemove() {
+        final T list1 = this.makeContainer(1, 2, 3);
+
+        assertTrue(list1.remove(2));
+
+        assertEquals(2, list1.size());
+        assertFalse(list1.contains(2));
+        assertFalse(list1.remove(2));
+
+        final T list2 = this.makeContainer(1, 3);
 
         assertEquals(list2, list1);
         assertEquals(list2.hashCode(), list1.hashCode());

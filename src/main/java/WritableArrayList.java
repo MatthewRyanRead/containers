@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
  *
  * @param <E> The type of elements contained
  */
-@SuppressWarnings("unused")
 public class WritableArrayList<E> extends ReadableArrayList<E> implements WritableList<E> {
     protected static final int DEFAULT_INITIAL_SIZE = 4;
     protected static final float DEFAULT_GROWTH_RATE = 2.0f;
@@ -90,7 +89,13 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
 
     @Override
     public boolean remove(@Nullable final E e) {
-        return false;
+        final int index = this.indexOf(e);
+        if (index < 0) {
+            return false;
+        }
+
+        this.removeAt(index);
+        return true;
     }
 
     @Override

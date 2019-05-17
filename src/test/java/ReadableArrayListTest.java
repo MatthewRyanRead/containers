@@ -25,6 +25,12 @@ public class ReadableArrayListTest<T extends ReadableArrayList<Integer>> extends
         return (T) new ReadableArrayList<>(elems);
     }
 
+    @Override
+    protected T makeContainer(final Container<Integer> other) {
+        //noinspection unchecked
+        return (T) new ReadableArrayList<>(other);
+    }
+
     @Test
     public void testCompare() {
         final T list1 = this.makeContainer(1, 2, 3);

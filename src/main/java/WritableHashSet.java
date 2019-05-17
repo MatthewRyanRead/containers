@@ -1,6 +1,5 @@
 import javax.annotation.Nullable;
 
-@SuppressWarnings("unused")
 public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableContainer<E> {
     protected static final float DEFAULT_GROWTH_FACTOR = 2.0f;
     // TODO: Support provided growth factors
@@ -63,7 +62,7 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
             }
 
             for (final Object elem : array) {
-                // noinspection unchecked
+                //noinspection unchecked
                 this.addToTable(newHashtable, (E) elem);
             }
         }
