@@ -4,8 +4,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * A {@link Container} that guarantees no duplicate elements, and lookup/insertion times based on E.hashCode()'s
- * computational efficiency (ideally O(1)).
+ * A {@link ReadableSet} with efficient lookup/insertion times based on {@code E.hashCode()}'s efficiency.
  *
  * @param <E> The type of elements contained
  */
