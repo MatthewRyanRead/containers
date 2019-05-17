@@ -140,20 +140,15 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
         return true;
     }
 
-    protected class WritableArrayListIterator<T extends WritableArrayList<E>> extends ReadableArrayListIterator<T>
-                                                                              implements WritableIterator<E> {
-        protected WritableArrayListIterator(final T list) {
-            super(list);
-        }
-
+    protected class WritableArrayListIterator extends ReadableArrayListIterator implements WritableIterator<E> {
         @Override
         public void remove() throws IllegalStateException {
-            this.list.removeAt(--this.currIndex);
+            WritableArrayList.this.removeAt(--this.currIndex);
         }
     }
 
     @Override
     public WritableIterator<E> iterator() {
-        return new WritableArrayListIterator<>(this);
+        return new WritableArrayListIterator();
     }
 }

@@ -110,17 +110,12 @@ public class ReadableArrayList<E> implements ReadableList<E> {
         return Arrays.equals(this.array, that.array);
     }
 
-    protected class ReadableArrayListIterator<T extends ReadableArrayList<E>> implements ReadableIterator<E> {
-        protected T list;
+    protected class ReadableArrayListIterator implements ReadableIterator<E> {
         protected int currIndex = 0;
-
-        protected ReadableArrayListIterator(final T list) {
-            this.list = list;
-        }
 
         @Override
         public boolean hasNext() {
-            return this.currIndex < this.list.size();
+            return this.currIndex < ReadableArrayList.this.size();
         }
 
         @Nullable
@@ -130,12 +125,12 @@ public class ReadableArrayList<E> implements ReadableList<E> {
                 throw new IllegalStateException("No elements remaining");
             }
 
-            return this.list.get(this.currIndex++);
+            return ReadableArrayList.this.get(this.currIndex++);
         }
     }
 
     @Override
     public ReadableIterator<E> iterator() {
-        return new ReadableArrayListIterator<>(this);
+        return new ReadableArrayListIterator();
     }
 }

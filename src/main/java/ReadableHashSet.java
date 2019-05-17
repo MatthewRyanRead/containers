@@ -189,19 +189,14 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
         return e.hashCode() % this.hashtable.length;
     }
 
-    protected class ReadableHashSetIterator<T extends ReadableHashSet<E>> implements ReadableIterator<E> {
-        protected T set;
+    protected class ReadableHashSetIterator implements ReadableIterator<E> {
         protected int currIndex = 0;
         protected int outerArrayIndex = 0;
         protected int innerArrayIndex = -1;
 
-        protected ReadableHashSetIterator(final T set) {
-            this.set = set;
-        }
-
         @Override
         public boolean hasNext() {
-            return this.currIndex < this.set.size();
+            return this.currIndex < ReadableHashSet.this.size();
         }
 
         @Nullable
@@ -213,7 +208,7 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
 
             this.currIndex++;
 
-            Object[] elems = this.set.hashtable[outerArrayIndex];
+            Object[] elems = ReadableHashSet.this.hashtable[outerArrayIndex];
             if (elems == null) {
                 this.advanceOuter();
             }
@@ -222,7 +217,7 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
             }
 
             //noinspection unchecked
-            return (E) this.set.hashtable[outerArrayIndex][++innerArrayIndex];
+            return (E) ReadableHashSet.this.hashtable[outerArrayIndex][++innerArrayIndex];
         }
 
         protected void advanceOuter() {
@@ -230,13 +225,13 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
 
             Object[] elems;
             do {
-                elems = this.set.hashtable[++outerArrayIndex];
+                elems = ReadableHashSet.this.hashtable[++outerArrayIndex];
             } while (elems == null || elems.length == 0);
         }
     }
 
     @Override
     public ReadableIterator<E> iterator() {
-        return new ReadableHashSetIterator<>(this);
+        return new ReadableHashSetIterator();
     }
 }
