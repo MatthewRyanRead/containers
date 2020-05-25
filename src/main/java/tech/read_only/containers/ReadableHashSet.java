@@ -1,3 +1,5 @@
+package tech.read_only.containers;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -213,9 +215,7 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
             this.currIndex++;
 
             Object[] elems = ReadableHashSet.this.hashtable[outerArrayIndex];
-            if (elems == null) {
-                this.advanceOuter();
-            } else if (this.innerArrayIndex == elems.length - 1) {
+            if (elems == null || this.innerArrayIndex == elems.length - 1) {
                 this.advanceOuter();
             }
 

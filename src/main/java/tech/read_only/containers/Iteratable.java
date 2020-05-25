@@ -1,3 +1,5 @@
+package tech.read_only.containers;
+
 /**
  * Interface denoting a class with data that can be traversed with an iterator.
  *

@@ -1,3 +1,5 @@
+package tech.read_only.containers;
+
 /**
  * Interface denoting an {@link Iteratable} class that may also have data removed by the iterator.
  *

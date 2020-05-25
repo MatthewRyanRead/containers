@@ -1,3 +1,5 @@
+package tech.read_only.containers;
+
 interface WritableContainerTest {
     void testAdd();
 

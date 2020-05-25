@@ -1,3 +1,5 @@
+package tech.read_only.containers;
+
 import javax.annotation.Nullable;
 
 public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableContainer<E> {

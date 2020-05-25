@@ -1,10 +1,12 @@
+package tech.read_only.containers;
+
+import static com.google.common.collect.Sets.newHashSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.google.common.collect.Sets;
 import java.util.HashSet;
 import javax.annotation.Nullable;
 import org.junit.Test;
@@ -59,8 +61,8 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
 
         assertTrue(container.containsAll(container));
 
-        // shortcut
-        final HashSet<E> elems = Sets.newHashSet(elem1, elem2, elem3);
+        //noinspection unchecked
+        final HashSet<E> elems = newHashSet(elem1, elem2, elem3);
 
         final ReadableIterator<E> iter = container.iterator();
         for (int i = 0; i < container.size(); i++) {

@@ -1,3 +1,5 @@
+package tech.read_only.containers;
+
 /**
  * Interface denoting a {@link ReadableIterator} class that can also remove elements from the
  * underlying source.
