@@ -2,7 +2,7 @@
 - MORE TESTS
     - Index tests for lists (especially `removeAt()`)
     - Other untested methods
-    - Null element handling
+    - **Null element handling**
     - etc.
 - Update iterators to deal with concurrent modifications (?)
 - Make concurrency-safe implementations

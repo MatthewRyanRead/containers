@@ -120,28 +120,6 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
     }
 
     @Override
-    public E[] toArray() {
-        final Object[] array = new Object[this.size()];
-        int offset = 0;
-        if (this.containsNull) {
-            array[0] = null;
-            offset = 1;
-        }
-
-        for (int i = 0, j = offset; i < this.hashtable.length; i++) {
-            if (this.hashtable[i] != null) {
-                final Object[] elems = this.hashtable[i];
-                for (final Object elem : elems) {
-                    array[j++] = elem;
-                }
-            }
-        }
-
-        //noinspection unchecked
-        return (E[]) array;
-    }
-
-    @Override
     public boolean equals(@Nullable final Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
@@ -208,7 +186,7 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
                 throw new IllegalStateException("No elements remaining");
             }
 
-            this.currIndex++;
+            if (this.currIndex++ == 0 && ReadableHashSet.this.containsNull) return null;
 
             Object[] elems = ReadableHashSet.this.hashtable[outerArrayIndex];
             if (elems == null || this.innerArrayIndex == elems.length - 1) {
