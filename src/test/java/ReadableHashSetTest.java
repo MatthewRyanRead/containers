@@ -5,7 +5,9 @@ import javax.annotation.Nullable;
 import org.junit.Test;
 
 public class ReadableHashSetTest<T extends ReadableHashSet<Integer>>
-        extends IntegerContainerTestBase<T> {
+        extends ContainerTestBase<Integer, T> {
+    private int currElem = 0;
+
     @Override
     protected T makeContainer() {
         //noinspection unchecked
@@ -19,15 +21,20 @@ public class ReadableHashSetTest<T extends ReadableHashSet<Integer>>
     }
 
     @Override
-    protected T makeContainer(final Integer... elems) {
+    protected T makeContainer(final Object... elems) {
         //noinspection unchecked
-        return (T) new ReadableHashSet<>(elems);
+        return (T) (ReadableHashSet<?>) new ReadableHashSet<>(elems);
     }
 
     @Override
     protected T makeContainer(final Container<Integer> other) {
         //noinspection unchecked
         return (T) new ReadableHashSet<>(other);
+    }
+
+    @Override
+    protected Integer generateElement() {
+        return ++currElem;
     }
 
     @Test

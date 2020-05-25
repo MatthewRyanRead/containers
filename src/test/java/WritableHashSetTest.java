@@ -21,9 +21,9 @@ public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends Rea
     }
 
     @Override
-    protected T makeContainer(final Integer... elems) {
+    protected T makeContainer(final Object... elems) {
         //noinspection unchecked
-        return (T) new WritableHashSet<>(elems);
+        return (T) (WritableHashSet<?>) new WritableHashSet<>(elems);
     }
 
     @Override

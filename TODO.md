@@ -1,4 +1,3 @@
-- Update `IntegerContainerTestBase` to be generic (contained type)
 - Update `ReadableArrayList` to cache and invalidate its hashcode
 - MORE TESTS
     - Index tests for lists (especially `removeAt()`)

@@ -6,29 +6,26 @@ import static org.junit.Assert.assertTrue;
 import javax.annotation.Nullable;
 import org.junit.Test;
 
+@SuppressWarnings("unchecked")
 public class WritableArrayListTest<T extends WritableArrayList<Integer>>
         extends ReadableArrayListTest<T> implements WritableContainerTest {
     @Override
     protected T makeContainer() {
-        //noinspection unchecked
         return (T) new WritableArrayList<Integer>();
     }
 
     @Override
     protected T makeContainer(@Nullable final Integer elem) {
-        //noinspection unchecked
         return (T) new WritableArrayList<>(elem);
     }
 
     @Override
-    protected T makeContainer(final Integer... elems) {
-        //noinspection unchecked
-        return (T) new WritableArrayList<>(elems);
+    protected T makeContainer(final Object... elems) {
+        return (T) (WritableArrayList<?>) new WritableArrayList<>(elems);
     }
 
     @Override
     protected T makeContainer(final Container<Integer> other) {
-        //noinspection unchecked
         return (T) new WritableArrayList<>(other);
     }
 

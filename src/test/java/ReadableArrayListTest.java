@@ -5,30 +5,35 @@ import static org.junit.Assert.assertTrue;
 import javax.annotation.Nullable;
 import org.junit.Test;
 
+@SuppressWarnings("unchecked")
 public class ReadableArrayListTest<T extends ReadableArrayList<Integer>>
-        extends IntegerContainerTestBase<T> {
+        extends ContainerTestBase<Integer, T> {
+    private int currElement = 0;
+
     @Override
     protected T makeContainer() {
-        //noinspection unchecked
         return (T) new ReadableArrayList<Integer>();
     }
 
     @Override
     protected T makeContainer(@Nullable final Integer elem) {
-        //noinspection unchecked
         return (T) new ReadableArrayList<>(elem);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    protected T makeContainer(final Integer... elems) {
-        //noinspection unchecked
-        return (T) new ReadableArrayList<>(elems);
+    protected T makeContainer(final Object... elems) {
+        return (T) (ReadableArrayList<?>) new ReadableArrayList<>(elems);
     }
 
     @Override
     protected T makeContainer(final Container<Integer> other) {
-        //noinspection unchecked
         return (T) new ReadableArrayList<>(other);
+    }
+
+    @Override
+    protected Integer generateElement() {
+        return ++currElement;
     }
 
     @Test
