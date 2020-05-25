@@ -1,8 +1,8 @@
 import javax.annotation.Nullable;
 
 /**
- * A {@link ReadableArrayList} that also supports the addition and removal of elements.
- * The backing array grows when needed (doubling in size by default).
+ * A {@link ReadableArrayList} that also supports the addition and removal of elements. The backing
+ * array grows when needed (doubling in size by default).
  *
  * @param <E> The type of elements contained
  */
@@ -49,7 +49,7 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
 
         //noinspection ManualArrayCopy
         for (int i = index; i < this.currMaxIndex; i++) {
-            this.array[i] = this.array[i+1];
+            this.array[i] = this.array[i + 1];
         }
         this.array[currMaxIndex--] = null;
 
@@ -80,7 +80,10 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
     }
 
     protected void growArray() {
-        final int newSize = this.size() == 0 ? DEFAULT_INITIAL_SIZE : (int)(this.array.length * this.growthRate);
+        final int newSize =
+                this.size() == 0
+                        ? DEFAULT_INITIAL_SIZE
+                        : (int) (this.array.length * this.growthRate);
 
         final Object[] newArray = new Object[newSize];
         System.arraycopy(this.array, 0, newArray, 0, this.array.length);
@@ -114,7 +117,7 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
         int result = 1;
         for (int i = 0; i < currMaxIndex; i++) {
             final Object elem = this.array[i];
-            result = result*31 + (elem == null ? 0 : elem.hashCode());
+            result = result * 31 + (elem == null ? 0 : elem.hashCode());
         }
 
         return result;
@@ -136,8 +139,7 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
                 if (that.array[i] != null) {
                     return false;
                 }
-            }
-            else if (!this.array[i].equals(that.array[i])) {
+            } else if (!this.array[i].equals(that.array[i])) {
                 return false;
             }
         }
@@ -145,7 +147,8 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
         return true;
     }
 
-    protected class WritableArrayListIterator extends ReadableArrayListIterator implements WritableIterator<E> {
+    protected class WritableArrayListIterator extends ReadableArrayListIterator
+            implements WritableIterator<E> {
         @Override
         public void remove() throws IllegalStateException {
             WritableArrayList.this.removeAt(--this.currIndex);

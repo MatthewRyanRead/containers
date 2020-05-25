@@ -1,5 +1,6 @@
 /**
- * Interface denoting a {@link ReadableIterator} class that can also remove elements from the underlying source.
+ * Interface denoting a {@link ReadableIterator} class that can also remove elements from the
+ * underlying source.
  *
  * @param <E> The type of elements being traversed
  */

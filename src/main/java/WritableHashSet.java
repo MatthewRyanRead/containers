@@ -53,7 +53,8 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
     }
 
     protected void resize() {
-        final int newSize = this.hashtable.length == 0 ? 4 : (int)(this.hashtable.length * this.growthFactor);
+        final int newSize =
+                this.hashtable.length == 0 ? 4 : (int) (this.hashtable.length * this.growthFactor);
         final Object[][] newHashtable = new Object[newSize][];
 
         for (final Object[] array : this.hashtable) {
@@ -70,24 +71,19 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
         this.hashtable = newHashtable;
     }
 
-    /**
-     * @param table Must not be zero-length
-     */
+    /** @param table Must not be zero-length */
     protected int getIndex(final Object[][] table, final E e) {
         return e.hashCode() % table.length;
     }
 
-    /**
-     * @param table Must not be zero-length
-     */
+    /** @param table Must not be zero-length */
     protected boolean addToTable(final Object[][] table, final E e) {
         final int index = this.getIndex(table, e);
 
         Object[] array = table[index];
         if (array == null) {
-            array = new Object[]{e};
-        }
-        else {
+            array = new Object[] {e};
+        } else {
             final Object[] newArray = new Object[array.length + 1];
             System.arraycopy(array, 0, newArray, 0, array.length);
             array = newArray;
@@ -124,7 +120,7 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
             if (e.equals(array[i])) {
                 final Object[] newArray = new Object[array.length - 1];
                 System.arraycopy(array, 0, newArray, 0, i);
-                System.arraycopy(array, i+1, newArray, i, array.length - i - 1);
+                System.arraycopy(array, i + 1, newArray, i, array.length - i - 1);
                 this.hashtable[index] = newArray;
 
                 this.size--;
@@ -149,7 +145,8 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
         this.cachedHashCode = null;
     }
 
-    protected class WritableHashSetIterator extends ReadableHashSetIterator implements WritableIterator<E> {
+    protected class WritableHashSetIterator extends ReadableHashSetIterator
+            implements WritableIterator<E> {
         protected boolean canRemove = false;
 
         @Nullable
@@ -169,7 +166,8 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
 
             this.canRemove = false;
             //noinspection unchecked
-            WritableHashSet.this.remove((E) WritableHashSet.this.hashtable[outerArrayIndex][innerArrayIndex--]);
+            WritableHashSet.this.remove(
+                    (E) WritableHashSet.this.hashtable[outerArrayIndex][innerArrayIndex--]);
             this.currIndex--;
         }
     }

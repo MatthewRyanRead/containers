@@ -1,12 +1,12 @@
-import org.junit.Test;
-
-import javax.annotation.Nullable;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ReadableArrayListTest<T extends ReadableArrayList<Integer>> extends IntegerContainerTestBase<T> {
+import javax.annotation.Nullable;
+import org.junit.Test;
+
+public class ReadableArrayListTest<T extends ReadableArrayList<Integer>>
+        extends IntegerContainerTestBase<T> {
     @Override
     protected T makeContainer() {
         //noinspection unchecked

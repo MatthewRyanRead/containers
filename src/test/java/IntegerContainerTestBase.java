@@ -1,17 +1,19 @@
-import org.junit.Test;
-
-import javax.annotation.Nullable;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import javax.annotation.Nullable;
+import org.junit.Test;
+
 // TODO: Generalize this to any contained type
 public abstract class IntegerContainerTestBase<T extends Container<Integer>> {
     protected abstract T makeContainer();
+
     protected abstract T makeContainer(@Nullable final Integer elem);
+
     protected abstract T makeContainer(final Integer... elems);
+
     protected abstract T makeContainer(final Container<Integer> other);
 
     @Test
@@ -47,14 +49,13 @@ public abstract class IntegerContainerTestBase<T extends Container<Integer>> {
         final ReadableIterator<Integer> iter = container.iterator();
         for (int i = 0; i < container.size(); i++) {
             assertTrue(iter.hasNext());
-            assertEquals(Integer.valueOf(i+1), iter.next());
+            assertEquals(Integer.valueOf(i + 1), iter.next());
         }
 
         assertFalse(iter.hasNext());
         try {
             iter.next();
-        }
-        catch (IllegalStateException e) {
+        } catch (IllegalStateException e) {
             return;
         }
 

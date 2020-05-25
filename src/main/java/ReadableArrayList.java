@@ -1,5 +1,5 @@
-import javax.annotation.Nullable;
 import java.util.Arrays;
+import javax.annotation.Nullable;
 
 /**
  * A {@link ReadableList} backed by an array. Guarantees constant-time lookup by index.

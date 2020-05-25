@@ -1,7 +1,8 @@
 import javax.annotation.Nullable;
 
 /**
- * Interface denoting a class that traverses elements from some underlying source in some fixed encounter order.
+ * Interface denoting a class that traverses elements from some underlying source in some fixed
+ * encounter order.
  *
  * @param <E> The type of elements being traversed
  */

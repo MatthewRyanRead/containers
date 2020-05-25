@@ -11,8 +11,8 @@ public interface ReadableList<E> extends Container<E> {
      *
      * @param index The index for lookup
      * @return The element at {@code index}
-     * @throws IllegalArgumentException if the index is out of bounds (less than 0 or greater than or equal to
-     *         {@link #size()})
+     * @throws IllegalArgumentException if the index is out of bounds (less than 0 or greater than
+     *     or equal to {@link #size()})
      */
     @Nullable
     E get(final int index);

@@ -1,10 +1,11 @@
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 
 /**
- * A {@link ReadableSet} with efficient lookup/insertion times based on {@code E.hashCode()}'s efficiency.
+ * A {@link ReadableSet} with efficient lookup/insertion times based on {@code E.hashCode()}'s
+ * efficiency.
  *
  * @param <E> The type of elements contained
  */
@@ -27,9 +28,8 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
         if (e == null) {
             this.hashtable = new Object[0][];
             this.containsNull = true;
-        }
-        else {
-            this.hashtable = new Object[][]{ new Object[]{e} };
+        } else {
+            this.hashtable = new Object[][] {new Object[] {e}};
         }
 
         this.size = 1;
@@ -38,7 +38,7 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
     protected ReadableHashSet(final E[] array, final float loadFactor) {
         this.maxLoadFactor = loadFactor;
 
-        this.hashtable = new Object[(int)(array.length / this.maxLoadFactor)][];
+        this.hashtable = new Object[(int) (array.length / this.maxLoadFactor)][];
         for (final E elem : array) {
             if (this.contains(elem)) {
                 continue;
@@ -56,7 +56,7 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
             Object[] elems = this.hashtable[index];
 
             if (elems == null) {
-                elems = new Object[]{elem};
+                elems = new Object[] {elem};
                 this.size++;
             } else if (!this.contains(elem)) {
                 final Object[] newElems = new Object[elems.length + 1];
@@ -153,23 +153,24 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
         }
 
         final ReadableHashSet<?> that = (ReadableHashSet<?>) o;
-        return this.size == that.size &&
-               this.containsNull == that.containsNull &&
-               Arrays.stream(this.hashtable)
-                     .filter(Objects::nonNull)
-                     .filter(a -> a.length != 0)
-                     .flatMap(Arrays::stream)
-                     .allMatch(that::contains);
+        return this.size == that.size
+                && this.containsNull == that.containsNull
+                && Arrays.stream(this.hashtable)
+                        .filter(Objects::nonNull)
+                        .filter(a -> a.length != 0)
+                        .flatMap(Arrays::stream)
+                        .allMatch(that::contains);
     }
 
     @Override
     public int hashCode() {
         if (cachedHashCode == null) {
-            cachedHashCode = Arrays.stream(this.hashtable)
-                                   .filter(Objects::nonNull)
-                                   .flatMap(Arrays::stream)
-                                   .map(Object::hashCode)
-                                   .reduce(1, (hc1, hc2) -> 31*hc1 + hc2);
+            cachedHashCode =
+                    Arrays.stream(this.hashtable)
+                            .filter(Objects::nonNull)
+                            .flatMap(Arrays::stream)
+                            .map(Object::hashCode)
+                            .reduce(1, (hc1, hc2) -> 31 * hc1 + hc2);
         }
 
         return cachedHashCode;
@@ -178,11 +179,11 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
     @Override
     public String toString() {
         return Arrays.stream(this.hashtable)
-                     .filter(Objects::nonNull)
-                     .filter(a -> a.length != 0)
-                     .flatMap(Arrays::stream)
-                     .map(Object::toString)
-                     .collect(Collectors.joining(", "));
+                .filter(Objects::nonNull)
+                .filter(a -> a.length != 0)
+                .flatMap(Arrays::stream)
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
     }
 
     protected int getIndex(final Object e) {
@@ -211,8 +212,7 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
             Object[] elems = ReadableHashSet.this.hashtable[outerArrayIndex];
             if (elems == null) {
                 this.advanceOuter();
-            }
-            else if (this.innerArrayIndex == elems.length - 1) {
+            } else if (this.innerArrayIndex == elems.length - 1) {
                 this.advanceOuter();
             }
 

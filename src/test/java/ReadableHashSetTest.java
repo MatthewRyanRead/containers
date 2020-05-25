@@ -1,11 +1,11 @@
-import org.junit.Test;
-
-import javax.annotation.Nullable;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ReadableHashSetTest<T extends ReadableHashSet<Integer>> extends IntegerContainerTestBase<T> {
+import javax.annotation.Nullable;
+import org.junit.Test;
+
+public class ReadableHashSetTest<T extends ReadableHashSet<Integer>>
+        extends IntegerContainerTestBase<T> {
     @Override
     protected T makeContainer() {
         //noinspection unchecked
