@@ -45,7 +45,7 @@ public interface Container<E> extends Iteratable<E, ReadableIterator<E>> {
     /**
      * Whether this container is empty.
      *
-     * @return {@code true} when {@link #size()} is 0; {@code false} otherwise
+     * @return {@code true} when {@link #size} is 0; {@code false} otherwise
      */
     default boolean isEmpty() {
         return this.size() == 0;
@@ -53,7 +53,7 @@ public interface Container<E> extends Iteratable<E, ReadableIterator<E>> {
 
     /**
      * @return An array containing the same elements as this container, in the same encounter order
-     *     as {@link #iterator()}.
+     *     as {@link #iterator}.
      */
     default E[] toArray() {
         final Object[] array = new Object[this.size()];
@@ -69,7 +69,7 @@ public interface Container<E> extends Iteratable<E, ReadableIterator<E>> {
 
     /**
      * Whether this container is equal to another. Must be false if {@link #containsAll} is false,
-     * if {@link #size()} is not equal, or if the containers are not of the same class. Subtypes may
+     * if {@link #size} is not equal, or if the containers are not of the same class. Subtypes may
      * set further conditions.
      *
      * <p>Note that implementations do not need to explicitly check {@link #containsAll}; they must

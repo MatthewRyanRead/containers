@@ -69,4 +69,14 @@ public class ReadableArrayListTest<T extends ReadableArrayList<Integer>>
         // not strictly guaranteed, but should be the case here
         assertNotEquals(list1.hashCode(), list2.hashCode());
     }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testIndexNegative() {
+        this.makeContainer(1).get(-1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testIndexTooBig() {
+        this.makeContainer(1).get(1);
+    }
 }

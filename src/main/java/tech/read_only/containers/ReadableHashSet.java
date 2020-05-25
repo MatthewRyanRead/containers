@@ -1,9 +1,9 @@
 package tech.read_only.containers;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
 
 /**
  * A {@link ReadableSet} with efficient lookup/insertion times based on {@code E.hashCode()}'s
@@ -37,7 +37,10 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
 
     protected ReadableHashSet(final E[] array, final float loadFactor) {
         this.maxLoadFactor = loadFactor;
+        this.setup(array);
+    }
 
+    protected void setup(final E[] array) {
         this.hashtable = new Object[(int) (array.length / this.maxLoadFactor)][];
         for (final E elem : array) {
             if (this.contains(elem)) continue;
@@ -68,8 +71,15 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
         }
     }
 
-    protected ReadableHashSet(final Container<E> other, final float loadFactor) {
-        this(other.toArray(), loadFactor);
+    protected ReadableHashSet(@Nullable final Container<E> other, final float loadFactor) {
+        this.maxLoadFactor = loadFactor;
+
+        if (other == null) {
+            this.hashtable = new Object[0][];
+            return;
+        }
+
+        this.setup(other.toArray());
     }
 
     public ReadableHashSet() {
@@ -86,19 +96,15 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
         this(other, DEFAULT_MAX_LOAD_FACTOR);
     }
 
-    public ReadableHashSet(final Container<E> other) {
+    public ReadableHashSet(@Nullable final Container<E> other) {
         this(other, DEFAULT_MAX_LOAD_FACTOR);
     }
 
     @Override
     public boolean contains(@Nullable final Object e) {
-        if (this.isEmpty()) {
-            return false;
-        }
-
-        if (e == null) {
-            return this.containsNull;
-        }
+        if (this.isEmpty()) return false;
+        if (e == null) return this.containsNull;
+        if (this.hashtable.length == 0) return false;
 
         final Object[] candidates = this.hashtable[this.getIndex(e)];
         if (candidates == null) {
@@ -152,12 +158,14 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
 
     @Override
     public String toString() {
-        return Arrays.stream(this.hashtable)
-                .filter(Objects::nonNull)
-                .filter(a -> a.length != 0)
-                .flatMap(Arrays::stream)
-                .map(Object::toString)
-                .collect(Collectors.joining(", "));
+        return (this.containsNull ? "null" : "")
+                + (this.containsNull && this.size() > 1 ? ", " : "")
+                + Arrays.stream(this.hashtable)
+                        .filter(Objects::nonNull)
+                        .flatMap(Arrays::stream)
+                        .filter(Objects::nonNull)
+                        .map(Object::toString)
+                        .collect(Collectors.joining(", "));
     }
 
     protected int getIndex(final Object e) {
@@ -182,10 +190,7 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
         @Nullable
         @Override
         public E next() throws IllegalStateException {
-            if (!this.hasNext()) {
-                throw new IllegalStateException("No elements remaining");
-            }
-
+            if (!this.hasNext()) throw new IllegalStateException("No elements remaining");
             if (this.currIndex++ == 0 && ReadableHashSet.this.containsNull) return null;
 
             Object[] elems = ReadableHashSet.this.hashtable[outerArrayIndex];

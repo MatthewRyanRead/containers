@@ -1,7 +1,7 @@
 package tech.read_only.containers;
 
-import java.util.Arrays;
 import javax.annotation.Nullable;
+import java.util.Arrays;
 
 public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableContainer<E> {
     protected static final float DEFAULT_GROWTH_FACTOR = 2.0f;
@@ -27,11 +27,10 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
 
     @Override
     public boolean add(@Nullable final E e) {
-        if (this.contains(e)) {
-            return false;
-        }
+        if (this.contains(e)) return false;
 
         if (e == null) {
+            this.size++;
             this.containsNull = true;
             this.cachedHashCode = null;
             return true;
@@ -61,9 +60,7 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
         final Object[][] newHashtable = new Object[newSize][];
 
         for (final Object[] array : this.hashtable) {
-            if (array == null) {
-                continue;
-            }
+            if (array == null) continue;
 
             for (final Object elem : array) {
                 //noinspection unchecked
@@ -102,15 +99,15 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
     @Override
     public boolean remove(@Nullable final E e) {
         if (e == null) {
-            if (this.containsNull) {
-                this.containsNull = false;
-                this.size--;
-                this.cachedHashCode = null;
-
-                return true;
+            if (!this.containsNull) {
+                return false;
             }
 
-            return false;
+            this.containsNull = false;
+            this.size--;
+            this.cachedHashCode = null;
+
+            return true;
         }
 
         final int index = this.getIndex(e);
@@ -137,9 +134,7 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
 
     @Override
     public void clear() {
-        if (this.isEmpty()) {
-            return;
-        }
+        if (this.isEmpty()) return;
 
         Arrays.fill(this.hashtable, null);
         this.size = 0;

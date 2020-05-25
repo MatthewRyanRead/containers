@@ -4,6 +4,7 @@ import static com.google.common.collect.Sets.newHashSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -61,6 +62,7 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
         assertTrue(container.contains(elem1));
 
         assertFalse(container.contains(this.generateElement()));
+        assertFalse(container.contains(null));
 
         assertTrue(container.containsAll(container));
         assertFalse(container.containsAll(this.makeContainer(this.generateElement())));
@@ -93,6 +95,8 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
 
         assertEquals(container1, container2);
         assertEquals(container1.hashCode(), container2.hashCode());
+
+        assertEquals(this.makeContainer(), this.makeContainer((T) null));
     }
 
     @Test
@@ -106,7 +110,21 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
                         : new ReadableArrayList<>(containerToTest);
 
         assertNotEquals(containerToTest, otherContainer);
-        assertEquals(containerToTest, this.makeContainer(containerToTest));
+    }
+
+    @Test
+    public void testNotEquals() {
+        final T container1 =
+                this.makeContainer(
+                        this.generateElement(), this.generateElement(), this.generateElement());
+
+        final T container2 =
+                this.makeContainer(
+                        this.generateElement(), this.generateElement(), this.generateElement());
+
+        assertNotEquals(container1, container2);
+        // not strictly guaranteed, but should be true here
+        assertNotEquals(container1.hashCode(), container2.hashCode());
     }
 
     @Test
@@ -122,5 +140,30 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
         for (int i = 0; i < container.size(); i++) {
             assertEquals(iter.next(), array[i]);
         }
+    }
+
+    @Test
+    public void testNull() {
+        final T nullContainer = this.makeContainer((E) null);
+
+        final T duplicateContainer = this.makeContainer(nullContainer);
+        assertEquals(nullContainer, duplicateContainer);
+        assertEquals(nullContainer.hashCode(), duplicateContainer.hashCode());
+        assertNotEquals(0, nullContainer.hashCode());
+
+        assertFalse(nullContainer.isEmpty());
+        final ReadableIterator<E> iter = nullContainer.iterator();
+        assertTrue(iter.hasNext());
+        assertNull(iter.next());
+        assertFalse(iter.hasNext());
+
+        assertTrue(nullContainer.contains(null));
+        assertTrue(nullContainer.containsAll(duplicateContainer));
+
+        assertEquals(new Object[] {null}, nullContainer.toArray());
+
+        final T mixedContainer = this.makeContainer(this.generateElement(), null);
+        assertTrue(mixedContainer.containsAll(nullContainer));
+        assertFalse(nullContainer.containsAll(mixedContainer));
     }
 }

@@ -57,12 +57,6 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
         return (E) elem;
     }
 
-    protected final void checkIndex(final int index) {
-        if (index >= this.array.length || index < 0) {
-            throw new IndexOutOfBoundsException("Size: " + this.array.length + " Index: " + index);
-        }
-    }
-
     @Override
     public void set(final int index, @Nullable final E e) {
         this.checkIndex(index);
@@ -119,13 +113,7 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
 
     @Override
     public int hashCode() {
-        int result = 1;
-        for (int i = 0; i < currMaxIndex; i++) {
-            final Object elem = this.array[i];
-            result = result * 31 + (elem == null ? 0 : elem.hashCode());
-        }
-
-        return result;
+        return super.hashCode();
     }
 
     @Override

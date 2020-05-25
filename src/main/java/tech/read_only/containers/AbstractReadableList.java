@@ -42,9 +42,7 @@ public abstract class AbstractReadableList<E> implements ReadableList<E> {
         @Nullable
         @Override
         public E next() throws IllegalStateException {
-            if (!this.hasNext()) {
-                throw new IllegalStateException("No elements remaining");
-            }
+            if (!this.hasNext()) throw new IllegalStateException("No elements remaining");
 
             return AbstractReadableList.this.get(this.currIndex++);
         }

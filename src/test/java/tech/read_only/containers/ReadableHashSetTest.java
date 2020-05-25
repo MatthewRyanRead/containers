@@ -52,4 +52,11 @@ public class ReadableHashSetTest<T extends ReadableHashSet<Integer>>
         assertEquals(set1, set2);
         assertEquals(set1.hashCode(), set2.hashCode());
     }
+
+    @Test
+    public void testToString() {
+        assertEquals("null, 1, 2", this.makeContainer(1, null, 2).toString());
+        assertEquals("null", this.makeContainer((Integer) null).toString());
+        assertEquals("1", this.makeContainer(1).toString());
+    }
 }

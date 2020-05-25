@@ -6,9 +6,9 @@ package tech.read_only.containers;
  */
 public interface WritableIterator<E> extends ReadableIterator<E> {
     /**
-     * Remove the last element returned by {@link #next()} from the underlying source.
+     * Remove the last element returned by {@link #next} from the underlying source.
      *
-     * @throws IllegalStateException if {@link #next()} has not previously been called successfully.
+     * @throws IllegalStateException if {@link #next} has not previously been called successfully.
      */
     void remove() throws IllegalStateException;
 }

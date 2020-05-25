@@ -1,6 +1,5 @@
 package tech.read_only.containers;
 
-import java.util.Arrays;
 import javax.annotation.Nullable;
 
 /** A {@link ReadableList} backed by an array. Guarantees constant-time lookup by index. */
@@ -37,12 +36,16 @@ public class ReadableArrayList<E> extends AbstractReadableList<E> {
 
     @Override
     public E get(final int index) {
-        if (index < 0 || index >= array.length) {
-            throw new IllegalArgumentException();
-        }
+        this.checkIndex(index);
 
         //noinspection unchecked
         return (E) array[index];
+    }
+
+    protected final void checkIndex(final int index) {
+        if (index >= this.array.length || index < 0) {
+            throw new IndexOutOfBoundsException("Size: " + this.array.length + " Index: " + index);
+        }
     }
 
     @Override
@@ -52,9 +55,7 @@ public class ReadableArrayList<E> extends AbstractReadableList<E> {
 
     @Override
     public int indexOf(@Nullable final Object e) {
-        if (e == null) {
-            return this.indexOfNull();
-        }
+        if (e == null) return this.indexOfNull();
 
         for (int i = 0; i < array.length; i++) {
             if (e.equals(array[i])) {
@@ -96,6 +97,6 @@ public class ReadableArrayList<E> extends AbstractReadableList<E> {
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(this.array);
+        return super.hashCode();
     }
 }

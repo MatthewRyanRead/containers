@@ -1,12 +1,14 @@
 package tech.read_only.containers;
 
+import org.junit.Test;
+
+import javax.annotation.Nullable;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-
-import javax.annotation.Nullable;
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends ReadableHashSetTest<T>
         implements WritableContainerTest {
@@ -37,20 +39,24 @@ public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends Rea
     @Test
     public void testAdd() {
         final T set1 = this.makeContainer();
-        set1.add(1);
 
+        assertTrue(set1.add(1));
         assertFalse(set1.isEmpty());
         assertEquals(1, set1.size());
         assertTrue(set1.contains(1));
 
-        set1.add(1);
-
+        assertFalse(set1.add(1));
         assertEquals(1, set1.size());
 
         final T set2 = this.makeContainer(1);
 
         assertEquals(set1, set2);
         assertEquals(set1.hashCode(), set2.hashCode());
+
+        assertTrue(set1.add(null));
+        assertTrue(set1.contains(null));
+        assertEquals(2, set1.size());
+        assertFalse(set1.add(null));
     }
 
     @Test
@@ -69,6 +75,13 @@ public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends Rea
 
         assertEquals(set1, set2);
         assertEquals(set1.hashCode(), set2.hashCode());
+
+        final T set3 = this.makeContainer();
+
+        set3.add(1);
+
+        assertEquals(1, set3.size());
+        assertTrue(set1.contains(1));
     }
 
     @Test
@@ -76,7 +89,15 @@ public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends Rea
         final T set1 = this.makeContainer(1, 2, 3);
         final WritableIterator<Integer> iter = set1.iterator();
 
-        iter.next();
+        try {
+            iter.remove();
+            fail("Expected IllegalStateException");
+            return;
+        }
+        catch (final IllegalStateException e) {
+            iter.next();
+        }
+
         iter.next();
         iter.remove();
 
@@ -118,10 +139,21 @@ public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends Rea
         assertEquals(2, set1.size());
         assertFalse(set1.contains(2));
         assertFalse(set1.remove(2));
+        assertFalse(set1.remove(null));
 
         final T set2 = this.makeContainer(1, 3);
 
         assertEquals(set2, set1);
         assertEquals(set2.hashCode(), set1.hashCode());
+
+        final T set3 = this.makeContainer((Integer) null);
+        assertTrue(set3.remove(null));
+        assertTrue(set3.isEmpty());
+
+        final T set4 = this.makeContainer();
+        set4.add(1);
+        assertFalse(set4.remove(3));
+        assertTrue(set4.remove(1));
+        assertTrue(set4.isEmpty());
     }
 }
