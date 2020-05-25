@@ -26,6 +26,9 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
 
     protected abstract T makeContainer(final Container<E> other);
 
+    /**
+     * @return An element distinct from all (i.e., not equal to any) previously generated elements.
+     */
     protected abstract E generateElement();
 
     @Test
@@ -60,6 +63,7 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
         assertFalse(container.contains(this.generateElement()));
 
         assertTrue(container.containsAll(container));
+        assertFalse(container.containsAll(this.makeContainer(this.generateElement())));
 
         //noinspection unchecked
         final HashSet<E> elems = newHashSet(elem1, elem2, elem3);
@@ -102,5 +106,21 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
                         : new ReadableArrayList<>(containerToTest);
 
         assertNotEquals(containerToTest, otherContainer);
+        assertEquals(containerToTest, this.makeContainer(containerToTest));
+    }
+
+    @Test
+    public void testToArray() {
+        final T container =
+                this.makeContainer(
+                        this.generateElement(), this.generateElement(), this.generateElement());
+
+        final E[] array = container.toArray();
+        assertEquals(container.size(), array.length);
+
+        final ReadableIterator<E> iter = container.iterator();
+        for (int i = 0; i < container.size(); i++) {
+            assertEquals(iter.next(), array[i]);
+        }
     }
 }

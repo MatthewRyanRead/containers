@@ -1,5 +1,6 @@
 package tech.read_only.containers;
 
+import java.util.Arrays;
 import javax.annotation.Nullable;
 
 public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableContainer<E> {
@@ -140,9 +141,7 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
             return;
         }
 
-        for (int i = 0; i < this.hashtable.length; i++) {
-            this.hashtable[i] = null;
-        }
+        Arrays.fill(this.hashtable, null);
         this.size = 0;
         this.cachedHashCode = null;
     }
@@ -150,6 +149,16 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
     @Override
     public WritableIterator<E> iterator() {
         return new WritableHashSetIterator();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     protected class WritableHashSetIterator extends ReadableHashSetIterator

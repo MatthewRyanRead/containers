@@ -1,5 +1,6 @@
 package tech.read_only.containers;
 
+import java.util.stream.IntStream;
 import javax.annotation.Nullable;
 
 /**
@@ -9,11 +10,19 @@ import javax.annotation.Nullable;
 public abstract class AbstractReadableList<E> implements ReadableList<E> {
     /** A basic implementation of {@link ReadableList#equals}. */
     @Override
-    public boolean equals(@Nullable final Object other) {
-        if (other == null) return false;
-        if (this.getClass() != other.getClass()) return false;
+    public boolean equals(@Nullable final Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
 
-        return this.listEquals((ReadableList<?>) other);
+        return this.listEquals((ReadableList<?>) o);
+    }
+
+    @Override
+    public int hashCode() {
+        return IntStream.range(0, this.size())
+                .mapToObj(this::get)
+                .map(e -> e == null ? 0 : e.hashCode())
+                .reduce(1, (hc1, hc2) -> 31 * hc1 + hc2);
     }
 
     @Override

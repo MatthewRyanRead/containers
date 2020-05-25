@@ -113,6 +113,11 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
     }
 
     @Override
+    public boolean equals(@Nullable final Object o) {
+        return super.equals(o);
+    }
+
+    @Override
     public int hashCode() {
         int result = 1;
         for (int i = 0; i < currMaxIndex; i++) {

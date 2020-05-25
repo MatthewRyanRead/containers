@@ -40,9 +40,7 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
 
         this.hashtable = new Object[(int) (array.length / this.maxLoadFactor)][];
         for (final E elem : array) {
-            if (this.contains(elem)) {
-                continue;
-            }
+            if (this.contains(elem)) continue;
 
             if (elem == null) {
                 if (!this.containsNull) {
@@ -144,21 +142,17 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || this.getClass() != o.getClass()) {
-            return false;
-        }
+    public boolean equals(@Nullable final Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
 
         final ReadableHashSet<?> that = (ReadableHashSet<?>) o;
         return this.size == that.size
                 && this.containsNull == that.containsNull
                 && Arrays.stream(this.hashtable)
                         .filter(Objects::nonNull)
-                        .filter(a -> a.length != 0)
                         .flatMap(Arrays::stream)
+                        .filter(Objects::nonNull)
                         .allMatch(that::contains);
     }
 
@@ -167,10 +161,12 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
         if (cachedHashCode == null) {
             cachedHashCode =
                     Arrays.stream(this.hashtable)
-                            .filter(Objects::nonNull)
-                            .flatMap(Arrays::stream)
-                            .map(Object::hashCode)
-                            .reduce(1, (hc1, hc2) -> 31 * hc1 + hc2);
+                                    .filter(Objects::nonNull)
+                                    .flatMap(Arrays::stream)
+                                    .filter(Objects::nonNull)
+                                    .map(Object::hashCode)
+                                    .reduce(1, (hc1, hc2) -> 31 * hc1 + hc2)
+                            * (this.containsNull ? 31 : 1);
         }
 
         return cachedHashCode;

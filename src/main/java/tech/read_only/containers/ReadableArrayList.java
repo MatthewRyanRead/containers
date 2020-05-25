@@ -90,6 +90,11 @@ public class ReadableArrayList<E> extends AbstractReadableList<E> {
     }
 
     @Override
+    public boolean equals(@Nullable final Object o) {
+        return super.equals(o);
+    }
+
+    @Override
     public int hashCode() {
         return Arrays.hashCode(this.array);
     }
