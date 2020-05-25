@@ -3,8 +3,6 @@ import javax.annotation.Nullable;
 /**
  * A {@link ReadableArrayList} that also supports the addition and removal of elements. The backing
  * array grows when needed (doubling in size by default).
- *
- * @param <E> The type of elements contained
  */
 public class WritableArrayList<E> extends ReadableArrayList<E> implements WritableList<E> {
     protected static final int DEFAULT_INITIAL_SIZE = 4;
@@ -124,39 +122,15 @@ public class WritableArrayList<E> extends ReadableArrayList<E> implements Writab
     }
 
     @Override
-    public boolean equals(@Nullable final Object obj) {
-        if (!(obj instanceof ReadableArrayList)) {
-            return false;
-        }
-
-        final ReadableArrayList that = ((ReadableArrayList) obj);
-        if (this.size() != that.size()) {
-            return false;
-        }
-
-        for (int i = 0; i < this.currMaxIndex; i++) {
-            if (this.array[i] == null) {
-                if (that.array[i] != null) {
-                    return false;
-                }
-            } else if (!this.array[i].equals(that.array[i])) {
-                return false;
-            }
-        }
-
-        return true;
+    public WritableIterator<E> iterator() {
+        return new WritableArrayListIterator();
     }
 
-    protected class WritableArrayListIterator extends ReadableArrayListIterator
+    protected class WritableArrayListIterator extends ReadableListIterator
             implements WritableIterator<E> {
         @Override
         public void remove() throws IllegalStateException {
             WritableArrayList.this.removeAt(--this.currIndex);
         }
-    }
-
-    @Override
-    public WritableIterator<E> iterator() {
-        return new WritableArrayListIterator();
     }
 }

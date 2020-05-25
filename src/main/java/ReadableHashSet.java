@@ -6,8 +6,6 @@ import javax.annotation.Nullable;
 /**
  * A {@link ReadableSet} with efficient lookup/insertion times based on {@code E.hashCode()}'s
  * efficiency.
- *
- * @param <E> The type of elements contained
  */
 public class ReadableHashSet<E> implements ReadableSet<E> {
     protected static final float DEFAULT_MAX_LOAD_FACTOR = 0.75f;
@@ -190,6 +188,11 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
         return e.hashCode() % this.hashtable.length;
     }
 
+    @Override
+    public ReadableIterator<E> iterator() {
+        return new ReadableHashSetIterator();
+    }
+
     protected class ReadableHashSetIterator implements ReadableIterator<E> {
         protected int currIndex = 0;
         protected int outerArrayIndex = 0;
@@ -228,10 +231,5 @@ public class ReadableHashSet<E> implements ReadableSet<E> {
                 elems = ReadableHashSet.this.hashtable[++outerArrayIndex];
             } while (elems == null || elems.length == 0);
         }
-    }
-
-    @Override
-    public ReadableIterator<E> iterator() {
-        return new ReadableHashSetIterator();
     }
 }

@@ -1,15 +1,11 @@
 import javax.annotation.Nullable;
 
-/**
- * A {@link ReadableList} that also supports the addition and removal of elements.
- *
- * @param <E> The type of elements contained
- */
+/** A {@link ReadableList} that also supports the addition and removal of elements. */
 public interface WritableList<E> extends ReadableList<E>, WritableContainer<E> {
     /**
      * Remove the element at the specified index.
      *
-     * @throws IndexOutOfBoundsException if the index is out of bounds (less than 0 or greater than
+     * @throws IndexOutOfBoundsException if the index is out of bounds (less than 0, or greater than
      *     or equal to {@link #size()})
      */
     @Nullable
@@ -18,7 +14,7 @@ public interface WritableList<E> extends ReadableList<E>, WritableContainer<E> {
     /**
      * Set the element at the specified index.
      *
-     * @throws IndexOutOfBoundsException if the index is out of bounds (less than 0 or greater than
+     * @throws IndexOutOfBoundsException if the index is out of bounds (less than 0, or greater than
      *     or equal to {@link #size()})
      */
     void set(final int index, @Nullable final E e);

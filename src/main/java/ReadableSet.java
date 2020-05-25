@@ -1,6 +1,2 @@
-/**
- * A {@link Container} that guarantees no duplicate elements.
- *
- * @param <E> The type of elements contained
- */
+/** A {@link Container} that guarantees no duplicate elements. */
 public interface ReadableSet<E> extends Container<E> {}

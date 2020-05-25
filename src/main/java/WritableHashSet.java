@@ -145,6 +145,11 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
         this.cachedHashCode = null;
     }
 
+    @Override
+    public WritableIterator<E> iterator() {
+        return new WritableHashSetIterator();
+    }
+
     protected class WritableHashSetIterator extends ReadableHashSetIterator
             implements WritableIterator<E> {
         protected boolean canRemove = false;
@@ -170,10 +175,5 @@ public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableCo
                     (E) WritableHashSet.this.hashtable[outerArrayIndex][innerArrayIndex--]);
             this.currIndex--;
         }
-    }
-
-    @Override
-    public WritableIterator<E> iterator() {
-        return new WritableHashSetIterator();
     }
 }

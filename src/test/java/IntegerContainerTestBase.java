@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -69,5 +70,16 @@ public abstract class IntegerContainerTestBase<T extends Container<Integer>> {
 
         assertEquals(container1, container2);
         assertEquals(container1.hashCode(), container2.hashCode());
+    }
+
+    @Test
+    public void testEqualsClass() {
+        final T containerToTest = this.makeContainer(1, 2, 3);
+        final Object otherContainer =
+                containerToTest.getClass() == ReadableArrayList.class
+                        ? new ReadableHashSet<>(containerToTest)
+                        : new ReadableArrayList<>(containerToTest);
+
+        assertNotEquals(containerToTest, otherContainer);
     }
 }

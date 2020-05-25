@@ -1,10 +1,6 @@
 import javax.annotation.Nullable;
 
-/**
- * A {@link Container} that also supports the addition and removal of elements.
- *
- * @param <E> The type of elements contained
- */
+/** A {@link Container} that also supports the addition and removal of elements. */
 public interface WritableContainer<E> extends Writeratable<E, WritableIterator<E>>, Container<E> {
     /**
      * Request to add an element to this container. When the call returns, the container holds the

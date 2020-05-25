@@ -1,12 +1,8 @@
 import java.util.Arrays;
 import javax.annotation.Nullable;
 
-/**
- * A {@link ReadableList} backed by an array. Guarantees constant-time lookup by index.
- *
- * @param <E> The type of elements contained
- */
-public class ReadableArrayList<E> implements ReadableList<E> {
+/** A {@link ReadableList} backed by an array. Guarantees constant-time lookup by index. */
+public class ReadableArrayList<E> extends AbstractReadableList<E> {
     protected Object[] array;
 
     public ReadableArrayList() {
@@ -94,43 +90,5 @@ public class ReadableArrayList<E> implements ReadableList<E> {
     @Override
     public int hashCode() {
         return Arrays.hashCode(this.array);
-    }
-
-    @Override
-    public boolean equals(@Nullable final Object obj) {
-        if (!(obj instanceof ReadableArrayList)) {
-            return false;
-        }
-
-        final ReadableArrayList that = ((ReadableArrayList) obj);
-        if (this.size() != that.size()) {
-            return false;
-        }
-
-        return Arrays.equals(this.array, that.array);
-    }
-
-    protected class ReadableArrayListIterator implements ReadableIterator<E> {
-        protected int currIndex = 0;
-
-        @Override
-        public boolean hasNext() {
-            return this.currIndex < ReadableArrayList.this.size();
-        }
-
-        @Nullable
-        @Override
-        public E next() throws IllegalStateException {
-            if (!this.hasNext()) {
-                throw new IllegalStateException("No elements remaining");
-            }
-
-            return ReadableArrayList.this.get(this.currIndex++);
-        }
-    }
-
-    @Override
-    public ReadableIterator<E> iterator() {
-        return new ReadableArrayListIterator();
     }
 }
