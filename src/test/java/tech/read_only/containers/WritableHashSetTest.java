@@ -1,16 +1,16 @@
 package tech.read_only.containers;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Test;
 
 import javax.annotation.Nullable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends ReadableHashSetTest<T>
+class WritableHashSetTest<T extends WritableHashSet<Integer>> extends ReadableHashSetTest<T>
         implements WritableContainerTest {
     @Override
     protected T makeContainer() {
@@ -93,8 +93,7 @@ public class WritableHashSetTest<T extends WritableHashSet<Integer>> extends Rea
             iter.remove();
             fail("Expected IllegalStateException");
             return;
-        }
-        catch (final IllegalStateException e) {
+        } catch (final IllegalStateException e) {
             iter.next();
         }
 

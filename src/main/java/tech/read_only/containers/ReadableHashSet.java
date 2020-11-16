@@ -1,9 +1,10 @@
 package tech.read_only.containers;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
 
 /**
  * A {@link ReadableSet} with efficient lookup/insertion times based on {@code E.hashCode()}'s

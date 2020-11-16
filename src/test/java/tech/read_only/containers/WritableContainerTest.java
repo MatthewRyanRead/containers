@@ -1,6 +1,6 @@
 package tech.read_only.containers;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 interface WritableContainerTest {
     @Test

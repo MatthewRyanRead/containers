@@ -1,7 +1,8 @@
 package tech.read_only.containers;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
+
+import javax.annotation.Nullable;
 
 public class WritableHashSet<E> extends ReadableHashSet<E> implements WritableContainer<E> {
     protected static final float DEFAULT_GROWTH_FACTOR = 2.0f;

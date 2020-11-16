@@ -1,14 +1,16 @@
 package tech.read_only.containers;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 import javax.annotation.Nullable;
-import org.junit.Test;
 
 @SuppressWarnings("unchecked")
-public class ReadableArrayListTest<T extends ReadableArrayList<Integer>>
+class ReadableArrayListTest<T extends ReadableArrayList<Integer>>
         extends ContainerTestBase<Integer, T> {
     private int currElement = 0;
 
@@ -39,7 +41,7 @@ public class ReadableArrayListTest<T extends ReadableArrayList<Integer>>
     }
 
     @Test
-    public void testCompare() {
+    void testCompare() {
         final T list1 = this.makeContainer(1, 2, 3);
         final T list2 = this.makeContainer(3, 2, 3, 1);
 
@@ -61,7 +63,7 @@ public class ReadableArrayListTest<T extends ReadableArrayList<Integer>>
     }
 
     @Test
-    public void testOrder() {
+    void testOrder() {
         final T list1 = this.makeContainer(1, 2, 3);
         final T list2 = this.makeContainer(3, 2, 1);
 
@@ -70,13 +72,13 @@ public class ReadableArrayListTest<T extends ReadableArrayList<Integer>>
         assertNotEquals(list1.hashCode(), list2.hashCode());
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testIndexNegative() {
-        this.makeContainer(1).get(-1);
+    @Test
+    void testIndexNegative() {
+        assertThrows(IndexOutOfBoundsException.class, () -> this.makeContainer(1).get(-1));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testIndexTooBig() {
-        this.makeContainer(1).get(1);
+    @Test
+    void testIndexTooBig() {
+        assertThrows(IndexOutOfBoundsException.class, () -> this.makeContainer(1).get(1));
     }
 }

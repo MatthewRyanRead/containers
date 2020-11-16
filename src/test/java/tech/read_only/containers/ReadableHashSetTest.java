@@ -1,12 +1,13 @@
 package tech.read_only.containers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 import javax.annotation.Nullable;
-import org.junit.Test;
 
-public class ReadableHashSetTest<T extends ReadableHashSet<Integer>>
+class ReadableHashSetTest<T extends ReadableHashSet<Integer>>
         extends ContainerTestBase<Integer, T> {
     private int currElem = 0;
 
@@ -40,7 +41,7 @@ public class ReadableHashSetTest<T extends ReadableHashSet<Integer>>
     }
 
     @Test
-    public void testCompare() {
+    void testCompare() {
         final T set1 = this.makeContainer(1, 2, 3);
         final T set2 = this.makeContainer(3, 2, 3, 1);
 
@@ -54,7 +55,7 @@ public class ReadableHashSetTest<T extends ReadableHashSet<Integer>>
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertEquals("null, 1, 2", this.makeContainer(1, null, 2).toString());
         assertEquals("null", this.makeContainer((Integer) null).toString());
         assertEquals("1", this.makeContainer(1).toString());

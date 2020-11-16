@@ -1,16 +1,20 @@
 package tech.read_only.containers;
 
 import static com.google.common.collect.Sets.newHashSet;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
+
 import javax.annotation.Nullable;
-import org.junit.Test;
 
 /**
  * Base tests applying to all {@link Container}s.
@@ -18,7 +22,7 @@ import org.junit.Test;
  * @param <T> the class to test
  * @param <E> the type of element contained by the test class
  */
-public abstract class ContainerTestBase<E, T extends Container<E>> {
+abstract class ContainerTestBase<E, T extends Container<E>> {
     protected abstract T makeContainer();
 
     protected abstract T makeContainer(@Nullable final E elem);
@@ -33,7 +37,7 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
     protected abstract E generateElement();
 
     @Test
-    public void testEmpty() {
+    void testEmpty() {
         final T container1 = this.makeContainer();
 
         assertTrue(container1.isEmpty());
@@ -48,7 +52,7 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
     }
 
     @Test
-    public void testReadAndContains() {
+    void testReadAndContains() {
         final E elem1 = this.generateElement();
         final E elem2 = this.generateElement();
         final E elem3 = this.generateElement();
@@ -87,7 +91,7 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
     }
 
     @Test
-    public void testCopyConstructor() {
+    void testCopyConstructor() {
         final T container1 =
                 this.makeContainer(
                         this.generateElement(), this.generateElement(), this.generateElement());
@@ -100,7 +104,7 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
     }
 
     @Test
-    public void testEqualsClass() {
+    void testEqualsClass() {
         final T containerToTest =
                 this.makeContainer(
                         this.generateElement(), this.generateElement(), this.generateElement());
@@ -113,7 +117,7 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
     }
 
     @Test
-    public void testNotEquals() {
+    void testNotEquals() {
         final T container1 =
                 this.makeContainer(
                         this.generateElement(), this.generateElement(), this.generateElement());
@@ -128,7 +132,7 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
     }
 
     @Test
-    public void testToArray() {
+    void testToArray() {
         final T container =
                 this.makeContainer(
                         this.generateElement(), this.generateElement(), this.generateElement());
@@ -143,7 +147,7 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
     }
 
     @Test
-    public void testNull() {
+    void testNull() {
         final T nullContainer = this.makeContainer((E) null);
 
         final T duplicateContainer = this.makeContainer(nullContainer);
@@ -160,7 +164,7 @@ public abstract class ContainerTestBase<E, T extends Container<E>> {
         assertTrue(nullContainer.contains(null));
         assertTrue(nullContainer.containsAll(duplicateContainer));
 
-        assertEquals(new Object[] {null}, nullContainer.toArray());
+        assertArrayEquals(new Object[] {null}, nullContainer.toArray());
 
         final T mixedContainer = this.makeContainer(this.generateElement(), null);
         assertTrue(mixedContainer.containsAll(nullContainer));
